@@ -1,26 +1,11 @@
 import React, { Component } from "react";
+import "semantic-ui-css/semantic.min.css";
+
+import TodoList from "./components/TodoList";
 
 class App extends Component {
-  state = {
-    todos: [],
-  };
-
-  componentWillMount() {
-    fetch("http://localhost:5000/api/todo/all")
-      .then(data => data.json())
-      .then(({ data: todos }) => {
-        this.setState({ todos });
-      });
-  }
-
   render() {
-    const todos = this.state.todos.map(todo => (
-      <div key={todo._id}>
-        <p>{todo.description}</p>
-        <p>{todo.isComplete.toString()}</p>
-      </div>
-    ));
-    return <div className="App">{todos}</div>;
+    return <TodoList />;
   }
 }
 
