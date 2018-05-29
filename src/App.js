@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 
 class App extends Component {
+  state = {
+    todos: [],
+  };
+
+  componentWillMount() {
+    fetch("http://localhost:5000/api/todo/all")
+      .then(data => data.json())
+      .then(({ data: todos }) => {
+        this.setState({ todos });
+      });
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    const todos = this.state.todos.map(todo => (
+      <div key={todo._id}>
+        <p>{todo.description}</p>
+        <p>{todo.isComplete.toString()}</p>
       </div>
-    );
+    ));
+    return <div className="App">{todos}</div>;
   }
 }
 
