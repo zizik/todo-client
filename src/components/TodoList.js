@@ -12,17 +12,19 @@ class TodoList extends Component {
   }
 
   render() {
+    console.log(this.props.isLoading);
     const todos = this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} />);
     return (
       <List divided relaxed>
-        {todos}
+        {this.props.isLoading ? <div>Loading...</div> : todos}
       </List>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  todos: state.todos,
+const mapStateToProps = ({ todos, isLoading }) => ({
+  todos,
+  isLoading,
 });
 
 const mapDispatchToProps = dispatch => {
