@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { List } from "semantic-ui-react";
 
 import TodoItem from "./TodoItem";
+import { addTodo } from "../actions/todos";
 
 class TodoList extends Component {
   // state = { todos: [] };
@@ -14,9 +16,12 @@ class TodoList extends Component {
   //       this.setState({ todos });
   //     });
   // }
+  handleClick = () => {
+    this.props.addTodo();
+  };
 
   render() {
-    const todos = this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} />);
+    const todos = this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} addTodo={this.handleClick} />);
     return (
       <List divided relaxed>
         {todos}
@@ -29,4 +34,8 @@ const mapStateToProps = state => ({
   todos: state.todos,
 });
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ addTodo }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
