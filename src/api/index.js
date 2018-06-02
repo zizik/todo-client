@@ -1,7 +1,12 @@
+import axios from "axios";
+
 const url = "http://localhost:5000";
 
 export default {
   getTodos() {
-    return fetch(`${url}/api/todo/all`).then(data => data.json());
+    return axios.get(`${url}/api/todo/all`);
+  },
+  addTodo(data) {
+    return axios.post(`${url}/api/todo/add`, data);
   },
 };

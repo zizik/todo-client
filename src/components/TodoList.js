@@ -12,7 +12,6 @@ class TodoList extends Component {
   }
 
   render() {
-    console.log(this.props.isLoading);
     const todos = this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} />);
     return (
       <List divided relaxed>

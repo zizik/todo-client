@@ -1,18 +1,28 @@
 import React from "react";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
 import { Form, Input, Button } from "semantic-ui-react";
 
-const FormExampleForm = () => (
-  <Form>
-    <Form.Field>
-      <label>Last Name</label>
-      <Input type="text" placeholder="Search..." action>
-        <input />
-        <Button type="submit" onClick={() => console.log("test")}>
-          Search
-        </Button>
-      </Input>
-    </Form.Field>
-  </Form>
-);
+import { addTodo } from "../actions/todos";
 
-export default FormExampleForm;
+const TodoForm = props => {
+  const { handleSubmit, addTodo } = props;
+  return (
+    <Form onSubmit={handleSubmit(addTodo)}>
+      <div>
+        <Input>
+          <Field name="description" component="input" type="text" placeholder="Type new todo" />
+          <Button type="submit">Add</Button>
+        </Input>
+      </div>
+    </Form>
+  );
+};
+
+export default compose(
+  connect(null, dispatch => bindActionCreators({ addTodo }, dispatch)),
+  reduxForm({
+    form: "newTodo",
+  }),
+)(TodoForm);
