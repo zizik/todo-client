@@ -1,11 +1,13 @@
-import { RECEIVED_TODOS, RECEIVED_NEW_TODO } from "../actions/todos";
+import { GET_TODOS_SUCCESS, ADD_TODO_SUCCESS, DELETE_TODO_SUCCESS } from "../actions/todos";
 
 export default (state = [], action) => {
   switch (action.type) {
-    case RECEIVED_TODOS:
+    case GET_TODOS_SUCCESS:
       return [...action.payload];
-    case RECEIVED_NEW_TODO:
+    case ADD_TODO_SUCCESS:
       return [...state, action.payload];
+    case DELETE_TODO_SUCCESS:
+      return state.filter(todo => todo._id !== action.payload);
     default:
       return state;
   }

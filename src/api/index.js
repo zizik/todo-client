@@ -9,4 +9,7 @@ export default {
   addTodo(data) {
     return axios.post(`${url}/api/todo/add`, data);
   },
+  deleteTodo(id) {
+    return axios.delete(`${url}/api/todo/${id}`);
+  },
 };
