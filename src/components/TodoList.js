@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { List } from "semantic-ui-react";
 
 import TodoItem from "./TodoItem";
+import EditModal from "./EditModal";
 import { getTodos, deleteTodo } from "../actions/todos";
 
 class TodoList extends Component {
@@ -18,9 +19,12 @@ class TodoList extends Component {
   render() {
     const todos = this.props.todos.map(todo => <TodoItem key={todo._id} {...todo} deleteTodo={this.handleDeleteTodo} />);
     return (
-      <List divided relaxed>
-        {this.props.isLoading ? <div>Loading...</div> : todos}
-      </List>
+      <React.Fragment>
+        <EditModal />
+        <List divided relaxed>
+          {this.props.isLoading ? <div>Loading...</div> : todos}
+        </List>
+      </React.Fragment>
     );
   }
 }
