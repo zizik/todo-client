@@ -12,4 +12,7 @@ export default {
   deleteTodo(id) {
     return axios.delete(`${url}/api/todo/${id}`);
   },
+  editTodo(id, data) {
+    return axios.put(`${url}/api/todo/${id}`, data);
+  },
 };

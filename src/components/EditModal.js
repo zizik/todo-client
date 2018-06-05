@@ -1,33 +1,33 @@
-import React, { Component } from "react";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import React from "react";
+import { Form, Input, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, compose } from "redux";
+import { Field, reduxForm } from "redux-form";
 
 import { toggleModal } from "../actions/editModal";
+import { editTodo } from "../actions/todos";
 
-//TODO: add proptypes
-class EditModal extends Component {
-  render() {
-    return (
-      <Modal open={this.props.isOpen} onClose={this.props.toggleModal} basic size="small">
-        <Header icon="browser" content="Cookies policy" />
-        <Modal.Content>
-          <h3>This website uses cookies to ensure the best user experience.</h3>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color="green" onClick={this.props.toggleModal} inverted>
-            <Icon name="checkmark" /> Got it
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    );
-  }
-}
+const EditModal = ({ handleSubmit, toggleModal, editTodo, isOpen, editingId }) => {
+  return (
+    <Modal open={isOpen} onClose={toggleModal} basic size="small">
+      <Form onSubmit={handleSubmit(editTodo)}>
+        <Input>
+          <Field name="description" component="input" type="text" placeholder="Type new todo" />
+          <Button type="submit">Edit</Button>
+        </Input>
+      </Form>
+    </Modal>
+  );
+};
 
-const mapStateToProps = ({ editModal }) => ({
-  isOpen: editModal.isOpen,
-});
+const mapStateToProps = ({ editModal: { isOpen, editingId } }) => ({ isOpen, editingId });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ toggleModal }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ toggleModal, editTodo }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  reduxForm({ form: "editTodo" }),
+)(EditModal);

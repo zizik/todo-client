@@ -21,8 +21,9 @@ const TodoForm = props => {
 };
 
 export default compose(
-  connect(null, dispatch => bindActionCreators({ addTodo }, dispatch)),
-  reduxForm({
-    form: "newTodo",
-  }),
+  connect(
+    null,
+    dispatch => bindActionCreators({ addTodo }, dispatch),
+  ),
+  reduxForm({ form: "newTodo" }),
 )(TodoForm);
